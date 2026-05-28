@@ -70,9 +70,25 @@ E na pasta raiz da batelada:
 └── 04-notepad/
 ```
 
-### Passo 3 · Empacotamento opcional
+### Passo 3 · Gerar página visual única (RECOMENDADO)
 
-Skill pode rodar `node pack-brief.js <output-dir>` pra zipar a pasta inteira pra compartilhar.
+**Esta é a etapa que torna o uso pelo usuário final ridiculamente simples.**
+
+Roda `node build-html.js <output-dir>` pra produzir um `index.html` self-contained na raiz do batch. A pessoa final abre 1 arquivo só no navegador e vê:
+
+- Referência visual do Pinterest (preview em destaque)
+- Imagens pra anexar no ChatGPT (cards com preview + botão "📋 Copiar" e "⬇ Baixar")
+- Prompt completo com botão GIGANTE "📋 Copiar prompt"
+- Copy esperada destacada (strings PT-BR que vão aparecer na imagem renderizada)
+- Acentos críticos visualizados em chips amarelos
+- Checklist de aprovação clicável (com risca quando marca)
+- Tabela de re-prompts para problemas comuns (cole no ChatGPT direto)
+
+Zero arquivos `.md` pra abrir, zero confusão.
+
+### Passo 4 · Empacotamento opcional
+
+Roda `node pack-brief.js <output-dir>` pra zipar a pasta inteira (incluindo o `index.html`) pra compartilhar via Drive/WhatsApp/email.
 
 ## Estrutura interna da skill
 
@@ -81,6 +97,7 @@ Skill pode rodar `node pack-brief.js <output-dir>` pra zipar a pasta inteira pra
 ├── SKILL.md                  # Este arquivo
 ├── README.md                 # Doc humano
 ├── package.json              # Sem deps externas (Node puro)
+├── build-html.js             # Gera index.html visual único pelo batch
 ├── pack-brief.js             # Helper opcional pra zipar saída
 ├── prompt-skeleton.md        # Estrutura do prompt pra ChatGPT
 ├── layout-catalog.md         # 20 layouts mapeados

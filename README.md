@@ -50,11 +50,12 @@ Requer apenas Node.js 16+ (pra rodar `pack-brief.js`, opcional). Skills usam só
 1. Você pede pro Claude: *"Monta um brief de 4 ads da NBR 5410 pra Flávia gerar no ChatGPT, usando as refs do board do Pinterest"*.
 2. Claude:
    - Baixa Pinterest (via `pinterest-board-download`) se ainda não tiver
-   - Lê o brand pack `brands/nbr5410.md`
-   - Escolhe 4 layouts (do catalog ou refs do Pinterest)
+   - Lê o brand pack `brands/<marca>/brand-pack.md`
+   - Escolhe N layouts (do catalog ou refs do Pinterest)
    - Para cada um, gera uma subpasta dentro de `<output>/`:
      ```
      <output>/nbr5410-batch-2026-05-28/
+     ├── index.html           ← ⭐ PÁGINA VISUAL ÚNICA (gera com build-html.js)
      ├── README.md
      ├── BRAND-PACK.md
      ├── 01-poster-plywood/
@@ -68,20 +69,24 @@ Requer apenas Node.js 16+ (pra rodar `pack-brief.js`, opcional). Skills usam só
      ├── 03-highlighter/
      └── 04-notepad/
      ```
-3. (Opcional) Você roda `node pack-brief.js <output>/nbr5410-batch-2026-05-28` pra zipar.
-4. Compartilha o ZIP via Drive / WhatsApp / email.
+3. Roda `node build-html.js <output>/nbr5410-batch-2026-05-28` → gera `index.html` self-contained com tudo visual.
+4. (Opcional) `node pack-brief.js <output>/nbr5410-batch-2026-05-28` pra zipar.
+5. Compartilha o ZIP via Drive / WhatsApp / email.
 
 ## Como ela (Flávia ou outro membro do time) usa
 
 1. Recebe o ZIP, extrai.
-2. Abre cada subpasta `01-...` em ordem.
-3. Lê `README.md` da subpasta (passo a passo curto).
-4. Abre ChatGPT Plus/Pro no navegador.
-5. **Anexa os arquivos `ref-*` na ordem listada em `DIRETRIZES.md`.**
-6. **Cola o conteúdo de `PROMPT.md`** no chat.
-7. Gera a imagem.
-8. Avalia com a checklist em `DIRETRIZES.md`. Se PASS, salva como `<nome>-FINAL.png` na mesma pasta. Se FAIL, re-gera com instruções prontas da tabela em `DIRETRIZES.md`.
-9. Quando terminar a batelada, manda os FINAIS de volta pro estrategista.
+2. **Dá duplo-clique em `index.html`** — abre no navegador padrão.
+3. Vê tudo numa página visual única: refs, prompt com botão de copiar, copy esperada, checklist.
+4. Pra cada criativo no card:
+   - Anexa as imagens da seção "📎 Anexe os arquivos" no ChatGPT Plus/Pro (na ordem numerada)
+   - Clica em "📋 Copiar prompt" → cola no chat → envia
+   - Valida com a checklist clicável
+   - Se FAIL: usa a tabela "🔧 Se sair errado, re-prompt" e cola o re-prompt sugerido
+   - Salva o FINAL.png na pasta correspondente
+5. Quando terminar a batelada, manda os FINAIS de volta zipados.
+
+**Zero abertura de `.md` separados, zero confusão.** Os `.md` continuam dentro de cada subpasta como source-of-truth, mas o `index.html` é o único arquivo que ela precisa abrir.
 
 ## Cross-platform
 
