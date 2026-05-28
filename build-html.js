@@ -170,6 +170,20 @@ function extractH1(md) {
   return m ? m[1].trim() : '';
 }
 
+function detectLogoVariant(filename) {
+  // Detecta o contexto recomendado de uso baseado em pistas no nome do arquivo.
+  // Retorna: 'light' (logo escuro, pra fundo claro)
+  //          'dark'  (logo claro, pra fundo escuro)
+  //          'auto'  (sem indicação clara)
+  const f = filename.toLowerCase();
+  // Indicadores diretos de variante
+  if (/light|claro|white|branco|fundo[-_]?claro/.test(f)) return 'light';
+  if (/dark|escuro|black|preto|fundo[-_]?escuro|on[-_]?dark/.test(f)) return 'dark';
+  // Logo em cores quentes/médias sobre superfícies neutras geralmente fica melhor em fundo claro
+  if (/gold|amber|orange|red|yellow|amarelo|vermelho/.test(f)) return 'light';
+  return 'auto';
+}
+
 function readCreative(folder) {
   const promptPath = path.join(folder, 'PROMPT.md');
   const diretrizesPath = path.join(folder, 'DIRETRIZES.md');
@@ -219,17 +233,32 @@ function buildHtml(batchName, brandPackMd, creatives) {
           const label = att.label || 'Imagem de referência';
           const pos = i + 1;
           const ext = path.extname(f).slice(1).toUpperCase();
+          const isLogo = /logo|escudo|brand/i.test(f);
+          const variant = isLogo ? detectLogoVariant(f) : 'auto';
+          const thumbClass =
+            variant === 'light'
+              ? 'att-thumb thumb-light'
+              : variant === 'dark'
+                ? 'att-thumb thumb-dark'
+                : 'att-thumb';
+          const ctxBadge =
+            variant === 'light'
+              ? '<span class="ctx-badge ctx-light">PRA FUNDO CLARO</span>'
+              : variant === 'dark'
+                ? '<span class="ctx-badge ctx-dark">PRA FUNDO ESCURO</span>'
+                : '';
           return `
         <div class="att-card">
           <div class="att-pos">${pos}º</div>
-          <div class="att-thumb"><img src="${escapeHtml(c.folderName)}/${escapeHtml(f)}" alt="${escapeHtml(label)}" onclick="openModal(this.src)"></div>
+          ${ctxBadge}
+          <div class="${thumbClass}"><img src="${escapeHtml(c.folderName)}/${escapeHtml(f)}" alt="${escapeHtml(label)}" onclick="openModal(this.src)"></div>
           <div class="att-meta">
             <div class="att-label">${escapeHtml(label)}</div>
             <div class="att-file">${escapeHtml(f)} <span class="badge-ext">${ext}</span></div>
           </div>
           <div class="att-actions">
             <a class="btn btn-sm" href="${escapeHtml(c.folderName)}/${escapeHtml(f)}" download>⬇ Baixar</a>
-            <button class="btn btn-sm" onclick="copyImage('${escapeHtml(c.folderName)}/${escapeHtml(f)}', this)">📋 Copiar</button>
+            <button class="btn btn-sm" data-src="${escapeHtml(c.folderName)}/${escapeHtml(f)}" data-variant="${variant}" onclick="copyImage(this)">📋 Copiar</button>
           </div>
         </div>`;
         })
@@ -520,6 +549,33 @@ function buildHtml(batchName, brandPackMd, creatives) {
     aspect-ratio: 4/3;
     display: flex; align-items: center; justify-content: center;
   }
+  .att-thumb.thumb-light {
+    background: #ffffff;  /* logo escuro → fundo claro pra ver direito */
+  }
+  .att-thumb.thumb-dark {
+    background: #0a0a0a;  /* logo claro → fundo escuro */
+  }
+  .ctx-badge {
+    position: absolute;
+    top: 10px; right: 10px;
+    z-index: 5;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    font-family: ui-monospace, "SF Mono", Monaco, monospace;
+  }
+  .ctx-light {
+    background: #f5f5f5;
+    color: #0a0a0a;
+    border: 1px solid #d4d4d4;
+  }
+  .ctx-dark {
+    background: #1a1a1a;
+    color: #f5f5f5;
+    border: 1px solid #404040;
+  }
   .att-thumb img {
     max-width: 100%; max-height: 100%; object-fit: contain;
     cursor: zoom-in;
@@ -558,6 +614,11 @@ function buildHtml(batchName, brandPackMd, creatives) {
   }
   .btn:hover { background: var(--surface-2); border-color: var(--accent); color: var(--accent-bright); }
   .btn-sm { padding: 5px 10px; font-size: 11px; }
+  .btn.copied {
+    background: var(--success) !important;
+    border-color: var(--success) !important;
+    color: white !important;
+  }
 
   /* Expected text */
   .text-list {
@@ -807,28 +868,82 @@ function buildHtml(batchName, brandPackMd, creatives) {
     }, 2200);
   }
 
-  async function copyImage(src, btn) {
+  async function copyImage(btn) {
+    const src = btn.dataset.src;
+    const variant = btn.dataset.variant || 'auto';
+    const original = btn.textContent;
+    btn.textContent = '⏳ Copiando...';
+
     try {
-      const res = await fetch(src);
-      const blob = await res.blob();
-      // Tentar Clipboard API (precisa PNG, alguns navegadores)
-      if (navigator.clipboard && window.ClipboardItem) {
-        const itm = new ClipboardItem({ [blob.type]: blob });
-        await navigator.clipboard.write([itm]);
-        showToast('Imagem copiada — cole no ChatGPT (Ctrl+V)');
-      } else {
-        // Fallback: forçar download
+      // 1. Carrega imagem
+      const img = await new Promise((resolve, reject) => {
+        const i = new Image();
+        i.crossOrigin = 'anonymous';
+        i.onload = () => resolve(i);
+        i.onerror = () => reject(new Error('Falhou ao carregar imagem'));
+        i.src = src;
+      });
+
+      // 2. Desenha em canvas (converte qualquer formato pra PNG)
+      const canvas = document.createElement('canvas');
+      canvas.width = img.naturalWidth || img.width;
+      canvas.height = img.naturalHeight || img.height;
+      const ctx = canvas.getContext('2d');
+
+      // Se for logo pra fundo claro, pinta branco antes (pra logo escuro
+      // não ficar invisível quando colado em qualquer fundo)
+      if (variant === 'light') {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      } else if (variant === 'dark') {
+        ctx.fillStyle = '#0a0a0a';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+      ctx.drawImage(img, 0, 0);
+
+      // 3. Converte canvas → blob PNG
+      const blob = await new Promise((resolve) =>
+        canvas.toBlob(resolve, 'image/png'),
+      );
+      if (!blob) throw new Error('Falhou ao gerar PNG');
+
+      // 4. Copia pro clipboard
+      if (!navigator.clipboard || !window.ClipboardItem) {
+        throw new Error('Navegador sem suporte Clipboard API');
+      }
+      await navigator.clipboard.write([
+        new ClipboardItem({ 'image/png': blob }),
+      ]);
+
+      btn.textContent = '✓ Copiada!';
+      btn.classList.add('copied');
+      showToast('Imagem copiada — cole no ChatGPT com Ctrl/Cmd+V');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 2200);
+    } catch (e) {
+      btn.textContent = original;
+      console.warn('copyImage erro:', e);
+
+      // Fallback: baixar
+      try {
+        const res = await fetch(src);
+        const blob = await res.blob();
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = url; a.download = src.split('/').pop();
+        a.href = url;
+        a.download = src.split('/').pop();
+        document.body.appendChild(a);
         a.click();
+        document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToast('Navegador não suporta copiar imagem — baixei como arquivo');
+        showToast(
+          'Cópia bloqueada pelo navegador — baixei como arquivo (arraste pro ChatGPT)',
+        );
+      } catch (e2) {
+        showToast('Erro: ' + (e.message || 'falhou copiar'));
       }
-      btn.textContent = '✓';
-      setTimeout(() => { btn.textContent = '📋 Copiar'; }, 1500);
-    } catch (e) {
-      showToast('Erro ao copiar — use Baixar');
     }
   }
 
