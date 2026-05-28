@@ -74,19 +74,17 @@ NBR 5410 = **Instalações Elétricas de Baixa Tensão** (norma mãe). Vocabulá
 
 **NÃO é:** dark dramatic, cyberpunk, glassmorphism agressivo, cyan tech, cinematic Rembrandt.
 
-## Assets canônicos (paths locais)
+## Assets canônicos (paths relativos à skill)
 
 | Asset | Path |
 |---|---|
-| Logo horizontal light bg | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/logo-horizontal-light.png` |
-| Logo horizontal dark bg | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/logo-horizontal.png` |
-| Portrait Hilton | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/hilton-portrait.webp` |
-| Foto Hilton alt | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/hilton-moreno.jpg` |
-| Mockup norma 5410 PDF | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/mockup-nbr5410.png` |
-| Mockup comunidade | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/mockup-comunidade.png` |
-| Checklist imagem | `~/Projects/hmnews/potencia-educacao-paginas/public/nbr5410/checklist-imagem.png` |
-
-A skill copia esses assets pra dentro de cada pacote de criativo.
+| Logo horizontal light bg | `brands/nbr5410/assets/logo-horizontal-light.png` |
+| Logo horizontal dark bg | `brands/nbr5410/assets/logo-horizontal.png` |
+| Portrait Hilton | `brands/nbr5410/assets/hilton-portrait.webp` |
+| Foto Hilton alt | `brands/nbr5410/assets/hilton-moreno.jpg` |
+| Mockup norma 5410 PDF | `brands/nbr5410/assets/mockup-nbr5410.png` |
+| Mockup comunidade | `brands/nbr5410/assets/mockup-comunidade.png` |
+| Checklist imagem | `brands/nbr5410/assets/checklist-imagem.png` |
 
 ## Identidade do produto
 

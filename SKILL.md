@@ -83,17 +83,38 @@ Skill pode rodar `node pack-brief.js <output-dir>` pra zipar a pasta inteira pra
 ├── package.json              # Sem deps externas (Node puro)
 ├── pack-brief.js             # Helper opcional pra zipar saída
 ├── prompt-skeleton.md        # Estrutura do prompt pra ChatGPT
-├── layout-catalog.md         # Mesma do social-design (20 layouts mapeados)
+├── layout-catalog.md         # 20 layouts mapeados
 ├── known-issues.md           # Issues conhecidos (acentos, drift face, etc)
 ├── brand-pack-template.md    # Template pra criar brand pack novo
-├── brands/                   # Brand packs prontos
-│   └── nbr5410.md
+├── brands/                   # Brand packs HMNews + assets reais embutidos
+│   ├── aterramento-tn/
+│   │   ├── brand-pack.md
+│   │   └── assets/           # logo, foto Hilton, mockup
+│   ├── expoeletrica/
+│   │   ├── brand-pack.md
+│   │   └── assets/logos/
+│   ├── ie40/
+│   │   ├── brand-pack.md
+│   │   └── assets/{logos,people}/
+│   ├── nbr5410/
+│   │   ├── brand-pack.md
+│   │   └── assets/           # logo, Hilton, mockups
+│   ├── nbr5419/
+│   │   ├── brand-pack.md
+│   │   └── assets/{logos,heros}/
+│   ├── potencia-educacao/
+│   │   ├── brand-pack.md
+│   │   └── assets/{logos,people}/
+│   └── potencia-pos/
+│       ├── brand-pack.md
+│       └── assets/{logos,people,professors}/
 └── templates/                # Templates dos arquivos de saída
     ├── PROMPT.md.template
     ├── DIRETRIZES.md.template
-    ├── README-creative.md.template  # README de cada criativo
-    └── README-batch.md.template     # README da batelada
+    └── README-batch.md.template
 ```
+
+**12MB total** (skill + todos os 7 brand packs + assets reais).
 
 ## Princípios do prompt pra ChatGPT
 

@@ -127,11 +127,25 @@ A pasta é self-contained. Pra distribuir:
 
 Sem `npm install` obrigatório — Node puro, sem deps.
 
-## Brand packs disponíveis
+## Brand packs disponíveis (HMNews / Grupo Potência)
 
-- `brands/nbr5410.md` — Como Aplicar a NBR 5410 (Potência Educação)
+Todos os brand packs vêm com **assets reais embutidos** (logos + fotos canônicas) em `brands/<marca>/assets/`. Não depende de paths do Mac de quem criou a skill — funciona offline.
 
-Pra adicionar mais, ver `brand-pack-template.md`.
+| Pasta | Marca | Tema | Paleta canônica |
+|---|---|---|---|
+| `brands/potencia-educacao/` | Potência Educação (institucional) | Marca-mãe / posicionamento amplo | Paper warm + burgundy + gold |
+| `brands/potencia-pos/` | Pós-Graduação Instalações Elétricas | Pós-graduação técnica | Paper warm + electric blue `#2563EB` |
+| `brands/ie40/` | IE 4.0 (Instalações Elétricas 4.0) | Curso modernização técnica | Dark navy + cyan `#06B6D4` |
+| `brands/nbr5410/` | Como Aplicar a NBR 5410 | Curso da norma de baixa tensão | Paper warm + red `#DC2626` |
+| `brands/nbr5419/` | Como Aplicar a NBR 5419 | Curso SPDA (proteção raios) | Navy deep + gold `#F0C142` |
+| `brands/aterramento-tn/` | Aterramento TN na Prática | Curso aterramento elétrico | Dark + yellow high-vis `#FFCB05` |
+| `brands/expoeletrica/` | ExpoElétrica 2026 | Feira presencial | Navy + orange `#F5A83A` + gold |
+
+Cada pasta contém:
+- `brand-pack.md` — paleta + tipografia + faculty + restrições + prompt block reutilizável
+- `assets/` — logos + fotos pessoas + mockups reais (variável por marca)
+
+Pra adicionar marca nova, ver `brand-pack-template.md`.
 
 ## Licença
 
