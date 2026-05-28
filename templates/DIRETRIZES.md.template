@@ -1,0 +1,49 @@
+# DIRETRIZES — {{CREATIVE_NAME}}
+
+## Antes de colar o prompt: anexe os arquivos na ORDEM ABAIXO
+
+ChatGPT lê os anexos na ordem em que foram enviados. Faça upload nesta sequência:
+
+{{ATTACHMENTS_LIST}}
+
+## Configuração do ChatGPT
+
+- **Modelo:** GPT-4o ou GPT-4 com Image (DALL-E 3 ou GPT-Image-1).
+- **Plano:** Plus ou Pro (free não tem geração de imagem com refs).
+- **Aspect ratio:** vertical {{ASPECT_RATIO}} ({{RESOLUTION}}). Quando ChatGPT pedir, escolha **portrait** ou peça "vertical 4:5".
+- **Quantidade:** 1 imagem por vez (o prompt já pede). Se ChatGPT gerar 4 variantes, pegue a melhor.
+
+## Restrições importantes da marca
+
+{{BRAND_RESTRICTIONS}}
+
+## O que fazer se sair errado
+
+| Problema | Re-prompt |
+|---|---|
+| Texto com erro de acento | "Regenerate but keep all text exactly as I wrote, including all Portuguese accents." |
+| Rosto da pessoa errado | "Preserve the face exactly as in the attached reference image. Do not modify features." |
+| Tomada/plug errado | "Use ONLY Brazilian NBR 14136 outlets (3 round pins). Never American or European plugs." |
+| Quadro elétrico sci-fi | "Make the electrical panel a real Brazilian residential one with simple breakers. No LEDs, no PLC." |
+| Cor errada (vermelho ≠ {{ACCENT_HEX}}) | "Match red color #{{ACCENT_HEX}} precisely. Pure clean red, not pink, not crimson." |
+| Veio square em vez de vertical | "Output must be vertical 4:5 portrait, not square." |
+
+## Limites do ChatGPT (não tem solução via prompt)
+
+- **Logo nunca sai 100% fiel** — ChatGPT recria estilo, não copia exato. Pra logo perfeito, sobrepor o PNG em Figma depois.
+- **Anexos têm limite** (até 4-5 imagens). Skill prioriza: 1) ref layout → 2) logo → 3) pessoa.
+- **Acentos complexos** em peças com muito texto podem escorregar. Se 3 tentativas falharem, considerar Gemini Imagen ou compor texto em Figma.
+
+## Validar antes de aprovar
+
+Checklist rápido depois de gerar:
+
+- [ ] Aspect ratio vertical correto (4:5 ou 9:16 conforme briefing)
+- [ ] Headline com acentos corretos: {{CHECKLIST_ACCENTS}}
+- [ ] Paleta da marca aplicada ({{CHECKLIST_COLORS}})
+- [ ] Sem plugs americanos/europeus (se for cena técnica)
+- [ ] Sem texto inventado fora do que foi pedido
+- [ ] Sem componentes sci-fi (se for cena técnica)
+- [ ] Rosto da pessoa preservado (se aplicável)
+
+Se 6+ checks PASS, aprovar. Se 2+ FAIL, re-gerar com prompt ajustado.

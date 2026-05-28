@@ -1,0 +1,40 @@
+# {{BATCH_NAME}}
+
+Pacote com {{COUNT}} criativos prontos pra gerar no ChatGPT.
+
+## Visão geral
+
+| # | Criativo | Layout | Status |
+|---|---|---|---|
+{{BATCH_TABLE}}
+
+## Como usar
+
+1. Cada subpasta numerada tem **1 criativo completo** (PROMPT + refs + diretrizes).
+2. Comece pelo `01-` e vá em ordem (ou pegue o que for prioridade).
+3. Dentro de cada subpasta, leia o `README.md` da pasta — é o passo a passo direto.
+4. **Sempre anexar os arquivos `ref-*` na ordem indicada em `DIRETRIZES.md`** antes de colar o prompt.
+
+## Brand pack resumido
+
+Veja `BRAND-PACK.md` na raiz dessa pasta — contém paleta, tipografia, restrições e visão geral da marca. Útil pra contexto ou pra ajustar prompts manualmente.
+
+## Configuração mínima
+
+- ChatGPT **Plus** ou **Pro** (free não suporta geração com refs anexadas)
+- Navegador no desktop (mobile é limitado pra upload múltiplo)
+- ~5-10 min por criativo (1-2 iterações se algo precisar ajuste)
+
+## Onde salvar os finais
+
+Crie uma subpasta `FINAIS/` na raiz desta batelada e salve cada imagem aprovada como `<n>-<slug>-FINAL.png`.
+
+## Limites conhecidos (ler antes)
+
+- Veja `known-issues.md` (se incluído) pra problemas comuns + mitigações.
+- Logo nunca sai 100% fiel — pra correção, sobrepor PNG real em Figma depois.
+- Acentos PT-BR podem escorregar em peças com muito texto — re-prompt com "preserve every accent".
+
+## Quando termina
+
+Manda o ZIP da pasta `FINAIS/` de volta pra quem solicitou (Jonatha).

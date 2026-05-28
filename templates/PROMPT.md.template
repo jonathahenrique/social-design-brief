@@ -1,0 +1,44 @@
+# PROMPT — {{CREATIVE_NAME}}
+
+> Cole o bloco abaixo no ChatGPT (Plus ou Pro) **depois de anexar as imagens** listadas em `DIRETRIZES.md`.
+> Cuidado: copie do início ao fim, incluindo `CRITICAL`.
+
+---
+
+You are generating a {{TIPO_DA_PECA}} for {{MARCA}} ({{DESCRICAO_CURTA_DA_MARCA}}).
+Output format: vertical {{ASPECT_RATIO}} ratio image (e.g., 1024x1280 for 4:5).
+
+USE THE ATTACHED IMAGES AS FOLLOWS:
+{{ATTACHMENTS_INSTRUCTIONS}}
+
+INSPIRED BY THE LAYOUT IN THE FIRST ATTACHED IMAGE — {{DESCRICAO_REF}}.
+
+ADAPT FOR {{MARCA}}:
+{{ADAPTACOES}}
+
+BRAND IDENTITY {{MARCA}}:
+{{BRAND_IDENTITY_BLOCK}}
+
+LAYOUT (top to bottom):
+{{LAYOUT_BLOCK}}
+
+HERO SUBJECT:
+{{HERO_BLOCK}}
+
+PROPS / SECONDARY ELEMENTS:
+{{PROPS_BLOCK}}
+
+BACKGROUND DETAIL:
+{{BACKGROUND_BLOCK}}
+
+STYLE:
+{{STYLE_BLOCK}}
+
+EXACT PORTUGUESE TEXT TO RENDER (use these strings exactly, preserving every accent):
+{{TEXT_STRINGS_BLOCK}}
+
+CRITICAL — Render every accent exactly as written. Do NOT change spelling, do NOT translate. Preserve every: {{LIST_OF_ACCENTS}}.
+
+{{CRITICAL_EXTRA_BLOCK}}
+
+Generate ONE image. Vertical {{ASPECT_RATIO}} strict. High quality.

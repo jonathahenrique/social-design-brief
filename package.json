@@ -1,0 +1,16 @@
+{
+  "name": "social-design-brief",
+  "version": "1.0.0",
+  "description": "Produz pacote exportável (PROMPT.md + refs + DIRETRIZES.md) pronto pra outra pessoa gerar arte de social media no ChatGPT. Não gera imagem por si só.",
+  "main": "pack-brief.js",
+  "scripts": {
+    "pack": "node pack-brief.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {},
+  "author": "",
+  "license": "MIT",
+  "private": true
+}
